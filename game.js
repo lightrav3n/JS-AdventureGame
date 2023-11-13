@@ -374,68 +374,6 @@ function help() {
   printStory(helpMessage);
 }
 
-// ------ GAMBLE --------------------------------
-
-function enterWirtsShop() {
-  printStory(
-    "As you enter Wirt's Black Market, the air is thick with the scent of arcane artifacts. Wirt, the eccentric merchant, eyes your gold with a sly grin. A sign reads: 'Gamble your fortune for mysterious treasures!'"
-  );
-  printStory(
-    "Type <strong>'gamble'</strong> to try your luck or <strong>'leave'</strong> to return to town."
-  );
-}
-
-function gamble() {
-  const gambleCost = 10;
-  if (playerGold >= gambleCost) {
-    playerGold -= gambleCost;
-
-    const gambleResult = Math.random();
-    if (gambleResult > 0.5) {
-      const lootType = Math.random() > 0.5 ? "armor" : "weapon";
-      const loot = generateRandomLoot(lootType);
-      const lootItem = { name: loot.name, type: loot.type, ...loot };
-      playerInventory.push(lootItem);
-
-      const winMessages = [
-        `Wirt smiles as you win ${lootItem.name} from the gamble.`,
-        `The mysterious forces favor you, granting you ${lootItem.name}. Wirt nods in approval.`,
-        `Fortune smiles upon you! You acquire ${lootItem.name} from the gamble.`,
-      ];
-
-      printStory(getRandomMessage(winMessages));
-      printInventory();
-    } else {
-      const loseMessages = [
-        "Wirt chuckles as luck eludes you in the gamble.",
-        "The mysterious energies play a trick on you, leaving Wirt amused.",
-        "Despite your efforts, the gamble yields no treasure. Wirt grins knowingly.",
-      ];
-
-      printStory(getRandomMessage(loseMessages));
-      printStory(
-        "Type <strong>'gamble'</strong> to try again, or <strong>'leave'</strong> to return to town."
-      );
-    }
-
-    updateStats();
-  } else {
-    const noGoldMessages = [
-      "You don't have enough gold to gamble. Find more gold on your adventures!",
-      "Your pockets feel light. Perhaps more gold awaits in the perilous dungeons.",
-      "Wirt glances at your meager gold and suggests accumulating more wealth before trying the gamble again.",
-    ];
-
-    printStory(getRandomMessage(noGoldMessages));
-    printStory("Type <strong>'leave'</strong> to return to town.");
-  }
-}
-
-function getRandomMessage(messages) {
-  const randomIndex = Math.floor(Math.random() * messages.length);
-  return messages[randomIndex];
-}
-
 ////-------------- QUESTS ---------------------
 
 function speakToAdria() {
@@ -1117,7 +1055,67 @@ function endFightAndy(playerVictorious) {
 // Reset game state for potential restart
 // resetGameState();
 
-// ...
+// ------ GAMBLE --------------------------------
+
+function enterWirtsShop() {
+  printStory(
+    "As you enter Wirt's Black Market, the air is thick with the scent of arcane artifacts. Wirt, the eccentric merchant, eyes your gold with a sly grin. A sign reads: 'Gamble your fortune for mysterious treasures!'"
+  );
+  printStory(
+    "Type <strong>'gamble'</strong> to try your luck or <strong>'leave'</strong> to return to town."
+  );
+}
+
+function gamble() {
+  const gambleCost = 10;
+  if (playerGold >= gambleCost) {
+    playerGold -= gambleCost;
+
+    const gambleResult = Math.random();
+    if (gambleResult > 0.5) {
+      const lootType = Math.random() > 0.5 ? "armor" : "weapon";
+      const loot = generateRandomLoot(lootType);
+      const lootItem = { name: loot.name, type: loot.type, ...loot };
+      playerInventory.push(lootItem);
+
+      const winMessages = [
+        `Wirt smiles as you win ${lootItem.name} from the gamble.`,
+        `The mysterious forces favor you, granting you ${lootItem.name}. Wirt nods in approval.`,
+        `Fortune smiles upon you! You acquire ${lootItem.name} from the gamble.`,
+      ];
+
+      printStory(getRandomMessage(winMessages));
+      printInventory();
+    } else {
+      const loseMessages = [
+        "Wirt chuckles as luck eludes you in the gamble.",
+        "The mysterious energies play a trick on you, leaving Wirt amused.",
+        "Despite your efforts, the gamble yields no treasure. Wirt grins knowingly.",
+      ];
+
+      printStory(getRandomMessage(loseMessages));
+      printStory(
+        "Type <strong>'gamble'</strong> to try again, or <strong>'leave'</strong> to return to town."
+      );
+    }
+
+    updateStats();
+  } else {
+    const noGoldMessages = [
+      "You don't have enough gold to gamble. Find more gold on your adventures!",
+      "Your pockets feel light. Perhaps more gold awaits in the perilous dungeons.",
+      "Wirt glances at your meager gold and suggests accumulating more wealth before trying the gamble again.",
+    ];
+
+    printStory(getRandomMessage(noGoldMessages));
+    printStory("Type <strong>'leave'</strong> to return to town.");
+  }
+}
+
+function getRandomMessage(messages) {
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  return messages[randomIndex];
+}
 
 // Reset game state function
 function resetGameState() {
