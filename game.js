@@ -117,10 +117,6 @@ function startGame() {
 
 function equipDone() {
   printStory(
-    `In the realm of Sanctuary, a lone adventurer, haunted by the shadows of a tragic past, seeks redemption amidst the looming darkness that envelops the town of Tristram. His name is Aric, a warrior whose life was once shattered by a demonic invasion that claimed the lives of his loved ones. Tormented by the memories of that fateful night, he now embarks on a perilous journey to confront the very creatures that wrought havoc upon his existence.<br> Aric's tale begins in the desolate streets of Tristram, a town gripped by an eternal night, plagued by demons and malevolent forces. The air is thick with an otherworldly chill as he wanders through the eerie alleys, haunted by the echoes of his past. The townsfolk speak in hushed tones of an ancient prophecy, foretelling of a chosen hero who would rise to face the Queen of Darkness, Andariel, and bring an end to the town's suffering.`
-  );
-
-  printStory(
     "Navigating the desolate streets of Tristram, a sense of foreboding permeates the air. Amidst the haunting silence, Adria's presence, shrouded in mystery, beckons you. Her eyes, a reflection of ancient wisdom, meet yours. Tristram's woes echo in the subtle tremor of her voice as she hints at the peril befalling the town. With a nod, she gestures toward her humble abode, inviting you to unravel the secrets that may hold the key to dispelling the encroaching darkness. <br> <br> You decide to <strong>`follow`</strong> her."
   );
 }
