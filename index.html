@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diablo Adventure</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        text-align: start;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #statsGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 20px;
+        margin-top: 20px;
+        margin: 10px;
+        padding: 10px;
+      }
+      #inventorySection {
+        margin: 10px;
+        padding: 10px;
+      }
+      #historyAndInventoryContainer {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 80%; 
+      }
+      #story {
+        width: 60%; 
+        height: 550px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        overflow: auto;
+      }
+
+      #inventorySection {
+        width: 35%; 
+      }
+      #userInput {
+        margin: 10px;
+        padding: 10px;
+        width: 75%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Diablo Adventure</h1>
+    <div id="statsGrid">
+      <div>
+        <strong>Level:</strong> <span id="level">1</span><br />
+        <strong>Experience:</strong> <span id="experience">0</span><br />
+      </div>
+      <div>
+        <strong>Attack:</strong> <span id="attack">0</span><br />
+        <strong>Defense:</strong> <span id="defense">0</span><br />
+        <strong>Health:</strong> <span id="health">100</span><br />
+      </div>
+    </div>
+    <div id="historyAndInventoryContainer">
+      <div id="story"></div>
+      <div id="inventorySection">
+        <h2>Equipped Items</h2>
+        <div id="equippedItems">
+          <p><strong>Weapon:</strong> <span id="equippedWeapon">None</span></p>
+          <p><strong>Armor:</strong> <span id="equippedArmor">None</span></p>
+          <h2>Inventory</h2>
+        </div>
+        <div id="inventory"></div>
+      </div>
+    </div>
+    <span style="display: none"
+      ><strong>Weapon:</strong> <span id="weapon"></span></span
+    ><br />
+    <span style="display: none"
+      ><strong>Armor:</strong> <span id="armor"></span></span
+    ><br />
+    <input
+      type="text"
+      id="userInput"
+      placeholder="Type your command..."
+      onkeyup="checkEnter(event)"
+    />
+    <button onclick="processInput()">Enter</button>
+
+    <script src="game.js"></script>
+  </body>
+</html>
