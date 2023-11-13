@@ -891,17 +891,17 @@ function startAndyFight() {
     return;
   }
 
-  if (fightEnded) {
-    printStory(
-      "You stand victorious before the defeated Andariel, her malevolent presence vanquished. Yet, the shadows persist. As you catch your breath, a haunting stillness settles over the Lair. In the aftermath of battle, a new revelation awaits. What path will you choose, hero?"
-    );
+  // if (fightEnded) {
+  //   printStory(
+  //     "You stand victorious before the defeated Andariel, her malevolent presence vanquished. Yet, the shadows persist. As you catch your breath, a haunting stillness settles over the Lair. In the aftermath of battle, a new revelation awaits. What path will you choose, hero?"
+  //   );
 
-    printStory(
-      "The echoes of your previous skirmish linger in the frigid air. The demonic presence vanquished, leaving a haunting stillness. Yet, the highlands hold no respite. In the looming darkness, a new threat emerges. Ready your weapons and type <strong>'engage'</strong> to confront the next abyssal adversary that awaits in the shadows."
-    );
+  //   printStory(
+  //     "The echoes of your previous skirmish linger in the frigid air. The demonic presence vanquished, leaving a haunting stillness. Yet, the highlands hold no respite. In the looming darkness, a new threat emerges. Ready your weapons and type <strong>'engage'</strong> to confront the next abyssal adversary that awaits in the shadows."
+  //   );
 
-    return;
-  }
+  //   return;
+  // }
 
   if (!andarielDefeated) {
     enemyHealth = Math.floor(Math.random() * 100) + 50;
