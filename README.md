@@ -22,6 +22,7 @@ This project is a text-based RPG game written in JavaScript. Players navigate th
 - Leveling up mechanics with enhanced stats
 - Random loot generation for a diverse inventory
 - Specialized boss fight against Andariel, the Queen of Darkness
+- Gambling function if you visit Wirt the Peddler, to spend your extra gold for a chance of getting some cool items.
 
 ## Getting Started
 
@@ -38,6 +39,9 @@ To run the game locally, follow these steps:
 
 3. Start your epic journey in the fantasy world!
 
+   Alternatively you can acces this link in your prefered browser: 
+`https://lightrav3n.github.io/JavaScriptExam/`
+
 ## Gameplay
 
 - Accept quests by typing `accept` and decline them with `decline`.
@@ -47,11 +51,11 @@ To run the game locally, follow these steps:
 
 ## Customization
 
-Feel free to customize and extend the game! Here are some ideas:
+Elements can be added in the future to enhance the experience:
 
 - Add new quests and characters to expand the storyline.
 - Introduce new enemies and challenges to increase the game's complexity.
-- Modify the loot generation system to include unique items and effects.
+
 
 ## Contributing
 
