@@ -313,6 +313,8 @@ function processInput() {
     enterWirtsShop();
   } else if (userInput.includes("gamble")) {
     gamble();
+  } else if (userInput.includes("help")) {
+    help();
   }
 
   // Player asks Adria what to do with the scroll
@@ -455,7 +457,9 @@ function returnToTown() {
   printStory(
     "- <strong>'speak with Adria'</strong> to share your victory and seek guidance."
   );
-  printStory("- <strong>'Visit Wirt'</strong> at the Black Market to explore mysterious offerings.");
+  printStory(
+    "- <strong>'Visit Wirt'</strong> at the Black Market to explore mysterious offerings."
+  );
   printStory("- 'check the town notice board' for rumors and quests.");
 }
 function returnToTristram() {
