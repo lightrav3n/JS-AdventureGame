@@ -53,6 +53,7 @@ let scroll = {
   type: "quest item",
   uses: "Quest item. Deliver to Adria",
 };
+
 ////----- MISCELLANEOUS -----
 
 function checkEnter(event) {
@@ -61,7 +62,8 @@ function checkEnter(event) {
   }
 }
 
-// Function to check if specific items are equipped
+// Function to check if starting items are equipped
+
 function checkAndPromptEquippedItems() {
   if (
     equippedWeapon &&
@@ -110,8 +112,6 @@ function startGame() {
 
   printInventory();
   printEquippedItems();
-
-  // Check if specific items are equipped and display a congratulatory message
   checkAndPromptEquippedItems();
 }
 
@@ -186,7 +186,7 @@ function printEquippedItems() {
 }
 
 function equipItem(item) {
-  // let unequippedItem;
+  let unequippedItem;
 
   if (item.type === "weapon") {
     unequippedItem = equippedWeapon;
@@ -315,10 +315,7 @@ function processInput() {
     gamble();
   } else if (userInput.includes("help")) {
     help();
-  }
-
-  // Player asks Adria what to do with the scroll
-  else if (userInput.includes("ask adria")) {
+  } else if (userInput.includes("ask adria")) {
     printStory(
       "'The Scroll of Teleportation holds ancient power,' Adria explains. 'I will decipher its secrets, delving into the arcane mysteries. Your patience will be rewarded. Meanwhile, stay vigilant on your quest.'"
     );
@@ -380,6 +377,70 @@ function help() {
 
   printStory(helpMessage);
 }
+
+// ------ GAMBLE --------------------------------
+
+function enterWirtsShop() {
+  printStory(
+    "As you enter Wirt's Black Market, the air is thick with the scent of arcane artifacts. Wirt, the eccentric merchant, eyes your gold with a sly grin. A sign reads: 'Gamble your fortune for mysterious treasures!'"
+  );
+  printStory(
+    "Type <strong>'gamble'</strong> to try your luck or <strong>'leave'</strong> to return to town."
+  );
+}
+
+function gamble() {
+  const gambleCost = 10;
+  if (playerGold >= gambleCost) {
+    playerGold -= gambleCost;
+
+    const gambleResult = Math.random();
+    if (gambleResult > 0.5) {
+      const lootType = Math.random() > 0.5 ? "armor" : "weapon";
+      const loot = generateRandomLoot(lootType);
+      const lootItem = { name: loot.name, type: loot.type, ...loot };
+      playerInventory.push(lootItem);
+
+      const winMessages = [
+        `Wirt smiles as you win ${lootItem.name} from the gamble.`,
+        `The mysterious forces favor you, granting you ${lootItem.name}. Wirt nods in approval.`,
+        `Fortune smiles upon you! You acquire ${lootItem.name} from the gamble.`,
+      ];
+
+      printStory(getRandomMessage(winMessages));
+      printInventory();
+    } else {
+      const loseMessages = [
+        "Wirt chuckles as luck eludes you in the gamble.",
+        "The mysterious energies play a trick on you, leaving Wirt amused.",
+        "Despite your efforts, the gamble yields no treasure. Wirt grins knowingly.",
+      ];
+
+      printStory(getRandomMessage(loseMessages));
+      printStory(
+        "Type <strong>'gamble'</strong> to try again, or <strong>'leave'</strong> to return to town."
+      );
+    }
+
+    updateStats();
+  } else {
+    const noGoldMessages = [
+      "You don't have enough gold to gamble. Find more gold on your adventures!",
+      "Your pockets feel light. Perhaps more gold awaits in the perilous dungeons.",
+      "Wirt glances at your meager gold and suggests accumulating more wealth before trying the gamble again.",
+    ];
+
+    printStory(getRandomMessage(noGoldMessages));
+    printStory("Type <strong>'leave'</strong> to return to town.");
+  }
+}
+
+function getRandomMessage(messages) {
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  return messages[randomIndex];
+}
+
+////-------------- QUESTS ---------------------
 
 function speakToAdria() {
   printStory(
@@ -483,68 +544,6 @@ function isQuestAccepted() {
   return playerExperience > 0;
 }
 
-function enterWirtsShop() {
-  printStory(
-    "As you enter Wirt's Black Market, the air is thick with the scent of arcane artifacts. Wirt, the eccentric merchant, eyes your gold with a sly grin. A sign reads: 'Gamble your fortune for mysterious treasures!'"
-  );
-  printStory(
-    "Type <strong>'gamble'</strong> to try your luck or <strong>'leave'</strong> to return to town."
-  );
-}
-
-function gamble() {
-  const gambleCost = 10;
-  if (playerGold >= gambleCost) {
-    playerGold -= gambleCost;
-
-    const gambleResult = Math.random();
-    if (gambleResult > 0.5) {
-      const lootType = Math.random() > 0.5 ? "armor" : "weapon";
-      const loot = generateRandomLoot(lootType);
-      const lootItem = { name: loot.name, type: loot.type, ...loot };
-      playerInventory.push(lootItem);
-
-      const winMessages = [
-        `Wirt smiles as you win ${lootItem.name} from the gamble.`,
-        `The mysterious forces favor you, granting you ${lootItem.name}. Wirt nods in approval.`,
-        `Fortune smiles upon you! You acquire ${lootItem.name} from the gamble.`,
-      ];
-
-      printStory(getRandomMessage(winMessages));
-      printInventory();
-    } else {
-      const loseMessages = [
-        "Wirt chuckles as luck eludes you in the gamble.",
-        "The mysterious energies play a trick on you, leaving Wirt amused.",
-        "Despite your efforts, the gamble yields no treasure. Wirt grins knowingly.",
-      ];
-
-      printStory(getRandomMessage(loseMessages));
-      printStory(
-        "Type <strong>'gamble'</strong> to try again, or <strong>'leave'</strong> to return to town."
-      );
-    }
-
-    updateStats();
-  } else {
-    const noGoldMessages = [
-      "You don't have enough gold to gamble. Find more gold on your adventures!",
-      "Your pockets feel light. Perhaps more gold awaits in the perilous dungeons.",
-      "Wirt glances at your meager gold and suggests accumulating more wealth before trying the gamble again.",
-    ];
-
-    printStory(getRandomMessage(noGoldMessages));
-    printStory("Type <strong>'leave'</strong> to return to town.");
-  }
-}
-
-function getRandomMessage(messages) {
-  const randomIndex = Math.floor(Math.random() * messages.length);
-  return messages[randomIndex];
-}
-
-////-------------- QUESTS ---------------------
-
 function acceptQuest() {
   if (isQuestAccepted()) {
     printStory(
@@ -635,6 +634,7 @@ function startQuest() {
 }
 
 /////----FIGHTS--------------------------------------------------
+
 let fightEnded = false;
 let hasTeleportationScroll = false;
 function startFight() {
@@ -657,7 +657,6 @@ function startFight() {
   enemyAttackPower = Math.floor(Math.random() * 3) + 1;
   enemyDefense = Math.floor(Math.random() * 2) + 1;
 
-  // Randomly select encounter description
   const encounterDescriptions = [
     `Emerging from the shadows, a demonic silhouette materializes before you, its ghastly presence sending shivers down your spine. Steel yourself for the impending clash!  <br> Demon Stats: <strong>Health: ${enemyHealth}, Attack Power: ${enemyAttackPower}, Defense: ${enemyDefense}.</strong>`,
 
@@ -680,7 +679,6 @@ function startFight() {
 
 function endFight(playerVictorious) {
   if (fightEnded) {
-    // The fight has already ended, do nothing.
     return;
   }
 
@@ -729,7 +727,6 @@ function endFight(playerVictorious) {
         );
       }
     } else {
-      // 50% chance for the loot to be a Scroll of Teleportation
       const lootType = Math.random() > 0.5 ? "quest item" : "weapon";
       const lootItem =
         lootType === "quest item"
@@ -759,7 +756,7 @@ function endFight(playerVictorious) {
       printStory(
         "The scroll in your hands bears the potential to unveil secrets and open new paths. Head back to Tristram, Have Adria <strong>decipher the scroll</strong> ."
       );
-      printInventory(); // Update the inventory display
+      printInventory();
     }
   } else {
     const defeatMessages = [
@@ -837,7 +834,7 @@ function playerAttack() {
   printStory(`${selectedText} Your attack deals ${playerDamage} damage.`);
 
   if (enemyHealth <= 0) {
-    endFight(true); // Player victorious
+    endFight(true);
   }
 }
 
@@ -854,7 +851,7 @@ function castSpell() {
   printStory(`${selectedText} Your spell deals ${spellDamage} damage.`);
 
   if (enemyHealth <= 0) {
-    endFight(true); // Player victorious
+    endFight(true);
   }
 }
 
@@ -888,6 +885,7 @@ function enemyTurn() {
 }
 
 //// -------------- ANDARIEL FIGHT -----------------
+
 function startAndyFight() {
   if (!isQuestAccepted()) {
     printStory(
@@ -965,7 +963,6 @@ function handleAndyFightCommands(userInput) {
   }
 }
 
-// Add more immersive descriptions for player actions
 function evade() {
   const defenseBonus = Math.floor(Math.random() * 5) + 3;
   playerDefense += defenseBonus;
@@ -981,7 +978,6 @@ function evade() {
   );
 }
 
-// Enhance the player attack description
 function strike() {
   const playerDamage = Math.floor(Math.random() * 20) + 10 + playerAttackPower;
   enemyHealth -= playerDamage;
@@ -1156,8 +1152,8 @@ function resetGameState() {
   updateInventory();
 }
 
-const loot = generateRandomLoot("loot"); // or "weapon"
-playerInventory.push({ ...loot }); // Create a new object with spread syntax
+const loot = generateRandomLoot("loot");
+playerInventory.push({ ...loot });
 
 function generateRandomLoot(type) {
   const armorOptions = [
