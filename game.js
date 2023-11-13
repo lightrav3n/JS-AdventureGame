@@ -345,6 +345,31 @@ function processInput() {
 
   userInputElement.value = ``;
 }
+
+function help() {
+  const helpMessage = `
+  Available Commands:
+  - 'start': Begin your adventure.
+  - 'done': Check and prompt equipped items.
+  - 'proceed': Equip items and proceed.
+  - 'follow': Follow Adria to start the quest.
+  - 'accept': Accept the quest from Adria.
+  - 'engage': Start a fight against demonic forces.
+  - 'defeat Andariel': Begin the battle against Andariel.
+  - 'decline': Decline the quest from Adria.
+  - 'attack', 'defend', 'cast spell': Combat commands during fights.
+  - 'back to tristram': Return to Tristram during a quest.
+  - 'return to town': Return to town.
+  - 'talk to Adria', 'decipher the scroll': Interact with Adria.
+  - 'ask Adria', 'express gratitude', 'inquire': Speak with Adria for guidance.
+  - 'reset': Reset the game state.
+  - 'speak with Adria': Initiate conversation with Adria.
+  - 'equip [item]': Equip a specific item from your inventory.
+  `;
+
+  printStory(helpMessage);
+}
+
 function speakToAdria() {
   printStory(
     "Adria's eyes meet yours with a knowing glint, acknowledging your triumph over the Queen of Darkness. The weight of victory and the echoes of battles won linger in the air. The very essence of Tristram seems to respond to your heroic presence."
