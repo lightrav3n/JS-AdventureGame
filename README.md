@@ -39,9 +39,10 @@ To run the game locally, follow these steps:
 
 3. Start your epic journey in the fantasy world!
 
-   Alternatively you can acces this link in your prefered browser: 
-`https://lightrav3n.github.io/JavaScriptExam/`
-
+Alternatively you can acces this link in your prefered browser: 
+```bash
+https://lightrav3n.github.io/JavaScriptExam/
+```
 ## Gameplay
 
 - Accept quests by typing `accept` and decline them with `decline`.
