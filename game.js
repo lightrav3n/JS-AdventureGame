@@ -14,6 +14,7 @@ const defenseElement = document.getElementById("defense");
 const healthElement = document.getElementById("health");
 const weaponElement = document.getElementById("weapon");
 const armorElement = document.getElementById("armor");
+const goldElement = document.getElementById("gold");
 
 function updateStats() {
   levelElement.textContent = playerLevel;
@@ -23,6 +24,7 @@ function updateStats() {
   healthElement.textContent = playerHealth;
   weaponElement.textContent = equippedWeapon ? equippedWeapon.name : "None";
   armorElement.textContent = equippedArmor ? equippedArmor.name : "None";
+  goldElement.textContent = playerGold;
 }
 
 /// Player's Variable Declarations
@@ -35,7 +37,7 @@ let playerDefense = 3;
 let enemyHealth = 0;
 let enemyAttackPower = 0;
 let enemyDefense = 0;
-let playerGold = 0;
+let playerGold = 100;
 let isPlayerTurn = true;
 let playerInventory = [];
 let equippedWeapon = null;
@@ -296,7 +298,8 @@ function processInput() {
   } else if (
     userInput.includes("back to tristram") ||
     userInput.includes("retreat") ||
-    userInput.includes("back to tristram")
+    userInput.includes("back to tristram") ||
+    userInput.includes("leave")
   ) {
     returnToTristram();
   } else if (userInput.includes("return to town")) {
@@ -306,6 +309,10 @@ function processInput() {
     userInput.includes("decipher the scroll")
   ) {
     talkToAdria();
+  } else if (userInput.includes("visit wirt")) {
+    enterWirtsShop();
+  } else if (userInput.includes("gamble")) {
+    gamble();
   }
 
   // Player asks Adria what to do with the scroll
@@ -358,9 +365,11 @@ function help() {
   - 'defeat Andariel': Begin the battle against Andariel.
   - 'decline': Decline the quest from Adria.
   - 'attack', 'defend', 'cast spell': Combat commands during fights.
-  - 'back to tristram': Return to Tristram during a quest.
+  - 'back to tristram', 'leave': Return to Tristram during a quest.
   - 'return to town': Return to town.
   - 'talk to Adria', 'decipher the scroll': Interact with Adria.
+  - 'visit wirt': Explore mysterious offerings at Wirt's Black Market.
+  - 'gamble': Gamble gold for potential items at Wirt's Black Market.
   - 'ask Adria', 'express gratitude', 'inquire': Speak with Adria for guidance.
   - 'reset': Reset the game state.
   - 'speak with Adria': Initiate conversation with Adria.
@@ -446,7 +455,7 @@ function returnToTown() {
   printStory(
     "- <strong>'speak with Adria'</strong> to share your victory and seek guidance."
   );
-  printStory("- 'visit Wirt's Black Market' to explore mysterious offerings.");
+  printStory("- <strong>'Visit Wirt'</strong> at the Black Market to explore mysterious offerings.");
   printStory("- 'check the town notice board' for rumors and quests.");
 }
 function returnToTristram() {
@@ -461,11 +470,73 @@ function returnToTristram() {
   printStory(
     "- 'investigate the abandoned cathedral' to uncover hidden secrets."
   );
-  printStory("- 'visit Wirt's Black Market' to explore mysterious offerings.");
+  printStory(
+    "- <strong>'Visit Wirt'</strong> at the Black Market to explore mysterious offerings."
+  );
 }
 
 function isQuestAccepted() {
   return playerExperience > 0;
+}
+
+function enterWirtsShop() {
+  printStory(
+    "As you enter Wirt's Black Market, the air is thick with the scent of arcane artifacts. Wirt, the eccentric merchant, eyes your gold with a sly grin. A sign reads: 'Gamble your fortune for mysterious treasures!'"
+  );
+  printStory(
+    "Type <strong>'gamble'</strong> to try your luck or <strong>'leave'</strong> to return to town."
+  );
+}
+
+function gamble() {
+  const gambleCost = 10;
+  if (playerGold >= gambleCost) {
+    playerGold -= gambleCost;
+
+    const gambleResult = Math.random();
+    if (gambleResult > 0.5) {
+      const lootType = Math.random() > 0.5 ? "armor" : "weapon";
+      const loot = generateRandomLoot(lootType);
+      const lootItem = { name: loot.name, type: loot.type, ...loot };
+      playerInventory.push(lootItem);
+
+      const winMessages = [
+        `Wirt smiles as you win ${lootItem.name} from the gamble.`,
+        `The mysterious forces favor you, granting you ${lootItem.name}. Wirt nods in approval.`,
+        `Fortune smiles upon you! You acquire ${lootItem.name} from the gamble.`,
+      ];
+
+      printStory(getRandomMessage(winMessages));
+      printInventory();
+    } else {
+      const loseMessages = [
+        "Wirt chuckles as luck eludes you in the gamble.",
+        "The mysterious energies play a trick on you, leaving Wirt amused.",
+        "Despite your efforts, the gamble yields no treasure. Wirt grins knowingly.",
+      ];
+
+      printStory(getRandomMessage(loseMessages));
+      printStory(
+        "Type <strong>'gamble'</strong> to try again, or <strong>'leave'</strong> to return to town."
+      );
+    }
+
+    updateStats();
+  } else {
+    const noGoldMessages = [
+      "You don't have enough gold to gamble. Find more gold on your adventures!",
+      "Your pockets feel light. Perhaps more gold awaits in the perilous dungeons.",
+      "Wirt glances at your meager gold and suggests accumulating more wealth before trying the gamble again.",
+    ];
+
+    printStory(getRandomMessage(noGoldMessages));
+    printStory("Type <strong>'leave'</strong> to return to town.");
+  }
+}
+
+function getRandomMessage(messages) {
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  return messages[randomIndex];
 }
 
 ////-------------- QUESTS ---------------------
@@ -612,7 +683,8 @@ function endFight(playerVictorious) {
   if (playerVictorious) {
     const experienceGain = Math.floor(Math.random() * 50) + 30;
     playerExperience += experienceGain;
-
+    const goldGain = Math.floor(Math.random() * 100) + 10;
+    playerGold += goldGain;
     const victoryMessages = [
       `The demonic foe falls before your might, yielding ${experienceGain} experience. A triumphant surge courses through you.`,
       `In the frigid aftermath, the defeated demon crumbles, granting you ${experienceGain} experience. Victory echoes in the chilling highlands.`,
