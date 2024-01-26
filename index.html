@@ -12,7 +12,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        background: #ecf0f3; /* Background color for a neumorphic look */
       }
+
+      h1 {
+        color: #34495e; /* Title color */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+      }
+
       #statsGrid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -20,33 +27,91 @@
         margin-top: 20px;
         margin: 10px;
         padding: 10px;
+        background: #ecf0f3; /* Background color for a neumorphic look */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+        border-radius: 10px; /* Rounded corners */
       }
-      #inventorySection {
-        margin: 10px;
+
+      #statsGrid div {
         padding: 10px;
       }
+
       #historyAndInventoryContainer {
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
-        width: 80%; 
+        width: 80%;
+        background: #ecf0f3; /* Background color for a neumorphic look */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+        border-radius: 10px; /* Rounded corners */
+        overflow: hidden;
       }
+
       #story {
-        width: 60%; 
+        width: 60%;
         height: 550px;
         margin: 10px;
         padding: 10px;
         border: 1px solid #ccc;
         overflow: auto;
+        background: #ecf0f3; /* Background color for a neumorphic look */
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+          inset -4px -4px 8px rgba(255, 255, 255, 0.8); /* Inset box shadow for depth */
+        border-radius: 10px; /* Rounded corners */
       }
 
       #inventorySection {
-        width: 35%; 
+        width: 35%;
+        background: #ecf0f3; /* Background color for a neumorphic look */
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  */
+        border-radius: 10px; /* Rounded corners */
+        overflow: hidden;
+        padding-left: 1em;
       }
-      #userInput {
-        margin: 10px;
+
+      h2 {
+        color: #34495e; /* Heading color */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow for depth */
+      }
+
+      #equippedItems,
+      #inventory {
         padding: 10px;
-        width: 75%;
+      }
+
+      input {
+        /* margin: 10px; */
+        padding: 10px;
+        width: 80%;
+        margin-right: 4em;
+        background: #ecf0f3; /* Background color for a neumorphic look */
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+          inset -4px -4px 8px rgba(255, 255, 255, 0.8); /* Inset box shadow for depth */
+        border: none;
+        border-radius: 10px; /* Rounded corners */
+        outline: none;
+      }
+
+      button {
+        background: #9e9e9e; /* Button color */
+        color: #fff; /* Button text color */
+
+        border: none;
+        height: 3em;
+        width: 8em;
+        border-radius: 10px; /* Rounded corners */
+        cursor: pointer;
+        transition: background 0.3s ease; /* Transition effect */
+      }
+
+      button:hover {
+        background: #565656; /* Button color on hover */
+      }
+      .u-input {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 80%;
       }
     </style>
   </head>
@@ -82,14 +147,15 @@
     <span style="display: none"
       ><strong>Armor:</strong> <span id="armor"></span></span
     ><br />
-    <input
-      type="text"
-      id="userInput"
-      placeholder="Type your command..."
-      onkeyup="checkEnter(event)"
-    />
-    <button onclick="processInput()">Enter</button>
-
+    <div class="u-input">
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Type your command..."
+        onkeyup="checkEnter(event)"
+      />
+      <button onclick="processInput()">Enter</button>
+    </div>
     <script src="game.js"></script>
   </body>
 </html>
